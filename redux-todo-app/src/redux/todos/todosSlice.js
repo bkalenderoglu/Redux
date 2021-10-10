@@ -6,15 +6,22 @@ export const todosSlice = createSlice({
         items: [
             {
                 id:"1",
-                title: "Learn React"
+                title: "Learn React",
+                completed: true,
             },
             {
                 id:"2",
-                title: "Go walk"
+                title: "Go walk",
+                completed: false,
             },
         ],
     },
-    reducers: {},
+    reducers: {
+        addTodo: (state, action) => {
+          state.items.push(action.payload);
+        }
+    },
 });
 
+export const { addTodo } = todosSlice.actions;
 export default todosSlice.reducer;
