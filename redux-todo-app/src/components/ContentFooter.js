@@ -1,29 +1,59 @@
-import React from 'react'
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateActiveFilter, clearCompleted } from "../redux/todos/todosSlice";
 
 function ContentFooter() {
-    return (
-        <footer className="footer">
-            <span className="todo-count">
-                <strong>2</strong> items left
-            </span>
+  const dispatch = useDispatch();
 
-            <ul className="filters">
-                <li>
-                    <a href="#/" className="selected">All</a>
-                </li>
-                <li>
-                    <a href="#/">Active</a>
-                </li>
-                <li>
-                    <a href="#/">Completed</a>
-                </li>
-            </ul>
+  const items = useSelector((state) => state.todos.items);
+  const itemsLeft = items.filter((item) => !item.completed).length;
 
-            <button className="clear-completed">
-                Clear completed
-            </button>
-	</footer>
-    )
+  const activeFilter = useSelector((state) => state.todos.activeFilter);
+
+  return (
+    <footer className="footer">
+      <span className="todo-count">
+        <strong>{itemsLeft}</strong> item{itemsLeft > 1 && "s"} left
+      </span>
+
+      <ul className="filters">
+        <li>
+          <a
+            href="#/"
+            className={activeFilter === "all" ? "selected" : ""}
+            onClick={() => dispatch(updateActiveFilter("all"))}
+          >
+            All
+          </a>
+        </li>
+        <li>
+          <a
+            href="#/"
+            className={activeFilter === "active" ? "selected" : ""}
+            onClick={() => dispatch(updateActiveFilter("active"))}
+          >
+            Active
+          </a>
+        </li>
+        <li>
+          <a
+            href="#/"
+            className={activeFilter === "completed" ? "selected" : ""}
+            onClick={() => dispatch(updateActiveFilter("completed"))}
+          >
+            Completed
+          </a>
+        </li>
+      </ul>
+
+      <button
+        className="clear-completed"
+        onClick={() => dispatch(clearCompleted())}
+      >
+        Clear completed
+      </button>
+    </footer>
+  );
 }
 
-export default ContentFooter
+export default ContentFooter;
