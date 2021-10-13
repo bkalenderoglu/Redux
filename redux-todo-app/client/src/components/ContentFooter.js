@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   updateActiveFilter,
@@ -13,6 +13,10 @@ function ContentFooter() {
   const itemsLeft = items.filter((item) => !item.completed).length;
 
   const activeFilter = useSelector((state) => state.todos.activeFilter);
+
+  useEffect(() => {
+    localStorage.setItem("activeFilter", activeFilter);
+  }, [activeFilter]);
 
   return (
     <footer className="footer">
