@@ -16,7 +16,7 @@ function Detail() {
   }, [char_id]);
 
   return (
-    <div>
+    <div style={{ paddingLeft: 20 }}>
       {loading && <Loading />}
       {char && (
         <div>
